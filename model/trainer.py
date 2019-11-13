@@ -9,7 +9,7 @@ class Trainer:
         self.args = args
         self.train_loader, self.val_loader, self.test_loader = split_data(preprocess(args.data_path))
 
-    def train(self, num_epochs, model, saved_dir, device, val_every, criterion, optimizer):
+    def train(self, num_epochs, model, saved_dir, device,criterion, optimizer, val_every):
         if criterion is None:
             criterion = torch.nn.BCELoss()
         if optimizer is None:
