@@ -9,7 +9,7 @@ from nltk.tokenize import sent_tokenize
 
 nltk.download('punkt')
 
-import bcolz
+# import bcolz
 import pickle
 
 # Device Setting
