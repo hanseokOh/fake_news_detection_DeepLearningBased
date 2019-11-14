@@ -16,9 +16,13 @@ def define_argparser():
     # argparse
     parser = argparse.ArgumentParser(description = 'run argparser')
     parser.add_argument('--model',required=False,default='bi-lstm', help='select model')
-    parser.add_argument('--data_path',required=False,default = '', help='fake news data path (csv format), must include text, type columns')
-    parser.add_argument('--weights_matrix',required=False,default = 'object/BiLSTM/weights_matrix_840B_300.npy', help='weights matrix path for word embeddings')
-    parser.add_argument('--model_path',required=True,help='model checkpoint path')
+    parser.add_argument('--weights_matrix',required=False,default = 'data/weights_matrix_6B_300.npy', help='weights matrix path for word embeddings')
+    parser.add_argument('--model_path',required=True, default = 'data/best_model.pt', help='model checkpoint path')
+
+    parser.add_argument('--sent_pad_path',required=False, default ='data/sent_pad_modified.npy', help='padded sentence(preprocessed)')
+    parser.add_argument('--label_path',default='data/label_modified.pkl')
+    parser.add_argument('--data_path',required=False, default = '', help='fake news data path (csv format), must include text, type columns')
+
     args = parser.parse_args()
     return args
 
