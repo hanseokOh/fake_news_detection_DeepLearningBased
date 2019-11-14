@@ -1,8 +1,4 @@
-import torch
-import torch.nn as nn
-from torch.autograd import Variable
 
-from utils import create_emb_layer
 
 class BiLSTM(nn.Module):
     def __init__(self, weights_matrix, hidden_size=100, num_layers=3, n_class=1, dropout=0.1):

@@ -18,7 +18,7 @@ def define_argparser():
     parser.add_argument('--model',required=False,default='bi-lstm', help='select model')
     parser.add_argument('--data_path',required=False,default = '', help='fake news data path (csv format), must include text, type columns')
     parser.add_argument('--weights_matrix',required=False,default = 'object/BiLSTM/weights_matrix_840B_300.npy', help='weights matrix path for word embeddings')
-    parser.add_argument('--save_dir', required=True, help='where to save model checkpoint')
+    parser.add_argument('--save_dir', required=False, help='where to save model checkpoint')
 
     parser.add_argument('--batch_size', type=int, default= 64)
     parser.add_argument('--n_epochs', type=int, default=10)
@@ -33,7 +33,14 @@ def define_argparser():
     return args
 
 def main(args):
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    torch.manual_seed(2019)
+    if device == 'cuda':
+        torch.cuda.manual_seed_all(2019)
+
+
     weights_matrix = np.load(args.weights_matrix, allow_pickle=True)  # 새로 저장
 
     if args.model == 'bi-lstm':

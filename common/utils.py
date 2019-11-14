@@ -1,32 +1,26 @@
-import numpy as np
-import pandas as pd
 import os
 import torch
 import torch.nn as nn
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize
 
-nltk.download('punkt')
+# import nltk
+# from nltk.tokenize import word_tokenize
+# from nltk.tokenize import sent_tokenize
+#
+# nltk.download('punkt')
 
-import bcolz
-import pickle
-
-
-# Device Setting
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-print('pytorch version: {}'.format(torch.__version__))
-print('GPU 사용 가능 여부: {}'.format(torch.cuda.is_available()))
-
-torch.manual_seed(2019)
-if device == 'cuda':
-    torch.cuda.manual_seed_all(2019)
+# import bcolz
+# import pickle
 
 import matplotlib.pyplot as plt
 
 
-dtype = torch.FloatTensor
+
+def check_device():
+    # Device Setting
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    print('pytorch version: {}'.format(torch.__version__))
+    print('GPU 사용 가능 여부: {}'.format(torch.cuda.is_available()))
 
 def create_emb_layer(weights_matrix, non_trainable=False):
     vocab_size, d_embedding = weights_matrix.shape[0], weights_matrix.shape[1]
@@ -54,9 +48,7 @@ def save_model(model, optimizer, epoch, train_loss,validation_loss, saved_dir, f
 
 def accuracy(pred, target):
     pred_y = pred >= 0.5
-#     print(pred_y.dtype)
     num_correct = target.eq(pred_y.float()).sum()
-#     print(num_correct)
     accuracy = (num_correct.item() * 100.0 / len(target))
     return accuracy
 

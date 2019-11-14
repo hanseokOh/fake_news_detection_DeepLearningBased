@@ -3,7 +3,7 @@ class Trainer:
         self.args = args
         self.train_loader, self.val_loader, self.test_loader = split_data_EAN(cls_file_name, KG_file_name, context_file_name, labels_file_name, val_ratio)
 
-    def train(num_epochs, model, train_loader, val_loader, criterion, optimizer, saved_dir,
+    def train(self, num_epochs, model, train_loader, val_loader, criterion, optimizer, saved_dir,
               val_every, device, epochs=0, avg_val_loss_list=[], avg_train_loss_list=[]):
         best_loss = 9999
         avg_val_loss_list = []
@@ -30,7 +30,7 @@ class Trainer:
             avg_train_loss = sum(temp_epoch_loss) / len(temp_epoch_loss)
 
             if (epoch + 1) % val_every == 0:  # Compare and save the best model
-                avg_loss = validation(epoch + 1, model, val_loader, criterion, device)
+                avg_loss = self.validation(epoch + 1, model, val_loader, criterion, device)
 
                 avg_train_loss_list.append(avg_train_loss)
                 avg_val_loss_list.append(avg_loss)
@@ -44,7 +44,7 @@ class Trainer:
 
         plot_results(np.arange(0, num_epochs), avg_train_loss_list, avg_val_loss_list)
 
-    def validation(epoch, model, data_loader, criterion, device):
+    def validation(self, epoch, model, data_loader, criterion, device):
         print('Start validation #{}'.format(epoch))
         model.eval()
         with torch.no_grad():
@@ -62,7 +62,7 @@ class Trainer:
         model.train()
         return avrg_loss
 
-    def test(model, data_loader, criterion, device):
+    def test(self, model, data_loader, criterion, device):
         print('Start test..')
         model.eval()
         with torch.no_grad():
