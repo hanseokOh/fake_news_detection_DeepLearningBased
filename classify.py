@@ -18,6 +18,7 @@ def define_argparser():
     parser.add_argument('--model',required=False,default='bi-lstm', help='select model')
     parser.add_argument('--data_path',required=False,default = '', help='fake news data path (csv format), must include text, type columns')
     parser.add_argument('--weights_matrix',required=False,default = 'object/BiLSTM/weights_matrix_840B_300.npy', help='weights matrix path for word embeddings')
+    parser.add_argument('--model_path',required=True,help='model checkpoint path')
     args = parser.parse_args()
     return args
 
@@ -33,9 +34,10 @@ def main(args):
     elif args.model =='cnn':
         pass
 
-    checkpoint = torch.load(model_path)
+    checkpoint = torch.load(args.model_path)
     state_dict = checkpoint['net']
     model.load_state_dict(state_dict=state_dict)
+
 
     cls = Trainer(args)
     cls.test(model, device)
