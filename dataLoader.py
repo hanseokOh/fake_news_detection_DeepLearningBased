@@ -6,6 +6,8 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 
+import pickle
+
 class Dataset(Dataset):
     def __init__(self, data, label):
         self.x_data = data  # sent_pad / index 화된 data
@@ -19,7 +21,10 @@ class Dataset(Dataset):
         y = Variable(torch.FloatTensor(np.expand_dims(self.y_data[idx], axis=0)))
         return x, y
 
-def split_data(sent_pad, label):
+def split_data(sent_pad_path, label_path):
+    sent_pad = np.load(sent_pad_path, allow_pickle=True)
+    label = pickle.load(open(label_path, 'rb'))
+
     X, X_test, y, y_test = train_test_split(sent_pad, label, test_size=0.2, random_state=42)
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
