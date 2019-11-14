@@ -1,13 +1,8 @@
-import numpy as np
-from dataLoader import split_data
-from utils import save_model, plot_results, accuracy
-
-import torch
 
 class Trainer:
     def __init__(self, args):
         self.args = args
-        self.train_loader, self.val_loader, self.test_loader = split_data(args.sent_pad_path, args.label_path)
+        self.train_loader, self.val_loader, self.test_loader = split_data_BaseDL(args.sent_pad_path, args.label_path)
 
     def train(self, num_epochs, model, saved_dir, device,criterion, optimizer, val_every):
         if criterion is None:

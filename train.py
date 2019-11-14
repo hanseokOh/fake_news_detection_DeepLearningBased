@@ -1,12 +1,11 @@
 import argparse
-import torch
-import torch.nn as nn
-from dataLoader import DataLoader
-
-from model.bi_lstm import BiLSTM
-from model.trainer import Trainer
 
 import numpy as np
+import torch
+
+from model.bi_lstm import BiLSTM
+from trainer.BaseDL import Trainer
+
 
 def define_argparser():
     '''

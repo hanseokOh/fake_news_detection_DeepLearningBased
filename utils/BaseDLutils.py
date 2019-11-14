@@ -12,6 +12,7 @@ nltk.download('punkt')
 import bcolz
 import pickle
 
+
 # Device Setting
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 

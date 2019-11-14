@@ -3,14 +3,14 @@ for test new data
 input: model, data, weight_matrix
 output: accuracy, loss, plot
 '''
-from model.trainer import Trainer
-from dataLoader import split_data
-from model.bi_lstm import BiLSTM
-
-
 import argparse
-import torch
+
 import numpy as np
+import torch
+
+from model.bi_lstm import BiLSTM
+from trainer.BaseDL import Trainer
+
 
 def define_argparser():
     # argparse
