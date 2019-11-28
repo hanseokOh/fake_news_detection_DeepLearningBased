@@ -59,6 +59,25 @@ def accuracy(pred, target):
     accuracy = (num_correct.item() * 100.0 / len(target))
     return accuracy
 
+
+def f1_measure(pred, target):
+    pred_y = pred >= 0.5
+    pred_y = pred_y.int()
+    pred_y = pred_y.tolist()
+    pred_y = [p[0] for p in pred_y] # get items of each element
+
+    eps = 1e-8
+
+    tp = sum([p == 1 and t == 1 for p, t in zip(pred_y, target)])
+    tn = sum([p == 0 and t == 0 for p, t in zip(pred_y, target)])
+    fp = sum([p == 1 and t == 0 for p, t in zip(pred_y, target)])
+    fn = sum([p == 0 and t == 1 for p, t in zip(pred_y, target)])
+
+    precision = tp / (tp + fp + eps)
+    recall = tp / (tp + fn + eps)
+    f1_score = 2 * (precision * recall) / (precision + recall + eps)
+    return f1_score
+
 '''수정 - train_loss / validation_loss 같이 plot'''
 def plot_results(x, y, z):
     """
