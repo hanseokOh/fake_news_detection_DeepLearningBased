@@ -1,6 +1,6 @@
 import numpy as np
 from dataLoader import split_data
-from utils import save_model, plot_results, accuracy
+from utils import save_model, plot_results, accuracy, f1_measure
 
 import torch
 
@@ -94,6 +94,8 @@ class Trainer:
         with torch.no_grad():
             total_loss = 0
             cnt = 0
+            total_f1 = []
+            total_acc = []
             for step, (sequence, target) in enumerate(self.test_loader):
                 sequence = sequence  # .type(torch.float32)
                 target = target  # .type(torch.float32)
@@ -107,5 +109,10 @@ class Trainer:
 
                 if (step + 1) % 50 == 0:
                     print('Step: ', step, 'Loss: ', loss.item(), 'Accuracy: ', accuracy(outputs, target))
+                total_f1.append(f1_measure(outputs, target))
+                total_acc.append(accuracy(outputs, target))
+
             avrg_loss = total_loss / cnt
             print('Test  Average Loss: {:.4f}'.format(avrg_loss))
+            print("Average F1: {}".format(sum(total_f1)/len(total_f1)))
+            print("Average Acc: {}".format(sum(total_acc)/len(total_acc)))
